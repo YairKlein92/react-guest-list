@@ -1,11 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function App() {
   const [guests, setGuests] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [attend, setAttend] = useState(false);
+  const baseUrl = 'http://localhost:4000';
+  const [refetch, setRefetch] = useState(false);
 
+  // const response = await fetch(`${baseUrl}/guests`);
+  // const allGuests = await response.json();
+  //   const response = await fetch(`${baseUrl}/guests/:id`);
+  // const guest = await response.json();
+  // const create = useEffect(() => {
+  //   async function fetchApi() {
+  //     const response = await fetch(`${baseUrl}/guests/1`, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         firstName: firstName,
+  //         lastName: lastName,
+  //         attend: attend,
+  //       }),
+  //     });
+  //     const createdGuest = await response.json();
+  //     console.log(createdGuest);
+  //   }
+  //   fetchApi().catch((error) => console.log(error));
+  // });
+  function randomID() {
+    return Math.floor(Math.random() + Math.random() * 10000000000);
+  }
   const handleChangeFirstName = (event) => {
     setFirstName(event.currentTarget.value);
     console.log(firstName);
@@ -22,16 +49,19 @@ function App() {
       setFirstName(firstName);
       setLastName(lastName);
       newList.push({
+        id: randomID(),
         firstName: firstName,
         lastName: lastName,
         attend: attend,
       });
       setGuests(newList);
+
       setFirstName('');
       setLastName('');
     }
   };
   console.log(guests);
+  // console.log(guests);
   const handleHittingEnterDelete = (event) => {
     event.preventDefault();
     const newList = [...guests];
@@ -47,7 +77,7 @@ function App() {
     setFirstName('');
     setLastName('');
   };
-  console.log(guests);
+  // console.log(guests);
 
   return (
     <div data-test-id="guest">
@@ -96,9 +126,10 @@ function App() {
         <h2>Participating:</h2>
         {guests.map((guest) => {
           return (
-            <div key={`guest-name${guest.firstName}-${guest.lastName}`}>
+            <div key={`guest-name-${guest.firstName}-${guest.lastName}`}>
               <input
                 type="checkbox"
+                aria-label={`${guest.firstName} ${guest.lastName} attending status`}
                 onChange={(event) => {
                   const newAttend = [...guests];
                   guest.attend = event.currentTarget.checked;
