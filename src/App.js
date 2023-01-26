@@ -38,14 +38,16 @@ function App() {
     setFirstName(firstName);
     console.log(firstName);
     setLastName(lastName);
-    newList.filter((guest) => {
-      console.log(guest.firstName);
-      return guest.firstName !== firstName;
+    const newListed = newList.filter((obj) => {
+      console.log(obj.firstName);
+      return obj.firstName !== firstName;
     });
-    setGuests(newList);
+    setGuests(newListed);
 
-    console.log(guests);
+    setFirstName('');
+    setLastName('');
   };
+  console.log(guests);
 
   return (
     <div data-test-id="guest">
