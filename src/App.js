@@ -4,8 +4,7 @@ function App() {
   const [guests, setGuests] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [deleteFirstName, setDeleteFirstName] = useState('');
-  const [deleteLastName, setDeleteLastName] = useState('');
+  const [attend, setAttend] = useState(false);
 
   const handleChangeFirstName = (event) => {
     setFirstName(event.currentTarget.value);
@@ -15,14 +14,6 @@ function App() {
     setLastName(event.currentTarget.value);
     console.log(lastName);
   };
-  const handleChangeFirstNameDelete = (event) => {
-    setDeleteFirstName(event.currentTarget.value);
-    console.log(deleteFirstName);
-  };
-  const handleChangeLastNameDelete = (event) => {
-    setDeleteLastName(event.currentTarget.value);
-    console.log(deleteLastName);
-  };
 
   const handleHittingEnter = (event) => {
     if (event.key === 'Enter') {
@@ -30,12 +21,10 @@ function App() {
       const newList = [...guests];
       setFirstName(firstName);
       setLastName(lastName);
-      // console.log(firstName + ' ' + lastName);
-      // console.log('Initial array:', newList);
       newList.push({
         firstName: firstName,
         lastName: lastName,
-        attend: false,
+        attend: attend,
       });
       setGuests(newList);
       setFirstName('');
@@ -46,26 +35,24 @@ function App() {
   const handleHittingEnterDelete = (event) => {
     event.preventDefault();
     const newList = [...guests];
-    setDeleteFirstName(deleteFirstName);
-    setDeleteLastName(deleteLastName);
-    newList.filter(() => {
-      return (
-        guests.firstName !== deleteFirstName &&
-        guests.lastName !== deleteLastName
-      );
+    setFirstName(firstName);
+    console.log(firstName);
+    setLastName(lastName);
+    newList.filter((guest) => {
+      console.log(guest.firstName);
+      return guest.firstName !== firstName;
     });
     setGuests(newList);
-    setDeleteFirstName('');
-    setDeleteLastName('');
 
     console.log(guests);
   };
+
   return (
     <div data-test-id="guest">
       <div>
         {/* Adding someone to the list */}
         <div>Add:</div>
-        <label htmlFor="firstName">First Name: &nbsp; </label>
+        <label htmlFor="firstName">First Name: </label>
         <input
           id="firstName"
           onChange={handleChangeFirstName}
@@ -83,8 +70,8 @@ function App() {
       </div>
       {/* Removing someone from the list */}
       <div>
-        <div>Remove:</div>
-        <div>
+        {/* <div>Remove:</div> */}
+        {/* <div>
           <label htmlFor="deleteFirstName">First Name: &nbsp; </label>
           <input
             id="deleteFirstName"
@@ -100,8 +87,27 @@ function App() {
             onKeyDown={handleHittingEnterDelete}
             value={deleteLastName}
           />
-        </div>
-        <button>Remove</button>
+        </div> */}
+        <button onClick={handleHittingEnterDelete}>Remove</button>
+      </div>
+      <div>
+        <h2>Participating:</h2>
+        {guests.map((guest) => {
+          return (
+            <div key={`guest-name${guest.firstName}-${guest.lastName}`}>
+              <input
+                type="checkbox"
+                onChange={(event) => {
+                  const newAttend = [...guests];
+                  guest.attend = event.currentTarget.checked;
+                  setGuests(newAttend);
+                }}
+              />
+              {guest.firstName} {guest.lastName} is{' '}
+              {guest.attend === true ? 'attending' : 'not attending'}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
