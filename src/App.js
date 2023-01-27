@@ -6,33 +6,44 @@ function App() {
   const [lastName, setLastName] = useState('');
   const [attend, setAttend] = useState(false);
   const baseUrl = 'http://localhost:4000';
-  const [refetch, setRefetch] = useState(false);
+  // const [refetch, setRefetch] = useState(false);
+  const [loading, setLoading] = useState(true);
+  // synchronizing API and app
+  useEffect(() => {
+    document.title = 'Guest list';
+    async function getUsers() {
+      const response = await fetch(`${baseUrl}/guests`);
+      const allGuests = await response.json();
+      console.log(allGuests);
+      setGuests(allGuests);
+      setLoading(false);
+    }
+
+    getUsers().catch((error) => console.log(error));
+  }, []);
 
   // const response = await fetch(`${baseUrl}/guests`);
   // const allGuests = await response.json();
   //   const response = await fetch(`${baseUrl}/guests/:id`);
   // const guest = await response.json();
-  // const create = useEffect(() => {
-  //   async function fetchApi() {
-  //     const response = await fetch(`${baseUrl}/guests/1`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         firstName: firstName,
-  //         lastName: lastName,
-  //         attend: attend,
-  //       }),
-  //     });
-  //     const createdGuest = await response.json();
-  //     console.log(createdGuest);
-  //   }
-  //   fetchApi().catch((error) => console.log(error));
-  // });
-  function randomID() {
-    return Math.floor(Math.random() + Math.random() * 10000000000);
-  }
+
+  // async function createApi() {
+  //   const response = await fetch(`${baseUrl}/guests/`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       firstName: 'Csaba',
+  //       lastName: 'Klein',
+  //       attend: attend,
+  //     }),
+  //   });
+  //   const createdGuest = await response.json();
+  //   console.log(createdGuest);
+  // }
+  // createApi().catch((error) => console.log(error));
+
   const handleChangeFirstName = (event) => {
     setFirstName(event.currentTarget.value);
     console.log(firstName);
@@ -49,33 +60,51 @@ function App() {
       setFirstName(firstName);
       setLastName(lastName);
       newList.push({
-        id: randomID(),
         firstName: firstName,
         lastName: lastName,
         attend: attend,
       });
       setGuests(newList);
 
+      async function createApi() {
+        const response = await fetch(`${baseUrl}/guests/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstName: firstName,
+            lastName: lastName,
+            attend: attend,
+          }),
+        });
+        const createdGuest = await response.json();
+        console.log(createdGuest);
+      }
+      createApi().catch((error) => console.log(error));
       setFirstName('');
       setLastName('');
     }
   };
   console.log(guests);
-  // console.log(guests);
   const handleHittingEnterDelete = (event) => {
     event.preventDefault();
     const newList = [...guests];
     setFirstName(firstName);
-    console.log(firstName);
     setLastName(lastName);
     const newListed = newList.filter((obj) => {
-      console.log(obj.firstName);
       return obj.firstName !== firstName;
     });
     setGuests(newListed);
 
     setFirstName('');
     setLastName('');
+  };
+
+  const handleHittingRemoveAll = (event) => {
+    event.preventDefault();
+    const emptyList = [];
+    setGuests(emptyList);
   };
   // console.log(guests);
 
@@ -121,9 +150,10 @@ function App() {
           />
         </div> */}
         <button onClick={handleHittingEnterDelete}>Remove</button>
+        <button onClick={handleHittingRemoveAll}>Remove all guests</button>
       </div>
       <div>
-        <h2>Participating:</h2>
+        <div>{loading ? 'Loading...' : <h2>Guests:</h2>}</div>
         {guests.map((guest) => {
           return (
             <div key={`guest-name-${guest.firstName}-${guest.lastName}`}>
@@ -134,6 +164,22 @@ function App() {
                   const newAttend = [...guests];
                   guest.attend = event.currentTarget.checked;
                   setGuests(newAttend);
+
+                  async function updateAttend() {
+                    const response = await fetch(
+                      `${baseUrl}/guests/${guest.id}`,
+                      {
+                        method: 'PUT',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ attending: guest.attend }),
+                      },
+                    );
+                    const updatedGuest = await response.json();
+                    console.log(updatedGuest);
+                  }
+                  updateAttend().catch((error) => console.log(error));
                 }}
               />
               {guest.firstName} {guest.lastName} is{' '}
