@@ -5,8 +5,8 @@ function App() {
   const [guestsDisplay, setGuestsDisplay] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [changeFirstName, setChangeFirstName] = useState('');
-  const [changeLastName, setChangeLastName] = useState('');
+  // const [changeFirstName, setChangeFirstName] = useState('');
+  // const [changeLastName, setChangeLastName] = useState('');
   // const [attend, setAttend] = useState(false);
   const [noEdit, setNoEdit] = useState(true);
   const baseUrl = 'http://localhost:4000';
@@ -33,12 +33,12 @@ function App() {
   const handleLastName = (event) => {
     setLastName(event.currentTarget.value);
   };
-  const handleChangeFirstName = (event) => {
-    setChangeFirstName(event.currentTarget.value);
-  };
-  const handleChangeLastName = (event) => {
-    setChangeLastName(event.currentTarget.value);
-  };
+  // const handleChangeFirstName = (event) => {
+  //   setChangeFirstName(event.currentTarget.value);
+  // };
+  // const handleChangeLastName = (event) => {
+  //   setChangeLastName(event.currentTarget.value);
+  // };
   const handleHittingEnter = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -73,40 +73,40 @@ function App() {
       console.log(guestsDisplay);
     }
   };
-  const checkingChangingName = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      const newList = [...guests];
-      setChangeFirstName(changeFirstName);
-      setChangeLastName(changeLastName);
-      const result = newList.find(
-        ({ firstName }) => firstName === changeFirstName,
-      );
-      console.log(typeof result.id);
-      return result.id;
-      // const changingName
+  // const checkingChangingName = (event) => {
+  //   if (event.key === 'Enter') {
+  //     event.preventDefault();
+  //     const newList = [...guests];
+  //     setChangeFirstName(changeFirstName);
+  //     setChangeLastName(changeLastName);
+  //     const result = newList.find(
+  //       ({ firstName }) => firstName === changeFirstName,
+  //     );
+  //     console.log(typeof result.id);
+  //     return result.id;
+  // const changingName
 
-      // async function createApi() {
-      //   const response = await fetch(`${baseUrl}/guests/`, {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify({
-      //       firstName: firstName,
-      //       lastName: lastName,
-      //       attend: attend,
-      //     }),
-      //   });
-      //   const createdGuest = await response.json();
-      //   console.log(createdGuest);
-      //   createdGuest.push(guestsDisplay);
-      // }
-      // createApi().catch((error) => console.log(error));
-      // setFirstName('');
-      // setLastName('');
-    }
-  };
+  // async function createApi() {
+  //   const response = await fetch(`${baseUrl}/guests/`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       firstName: firstName,
+  //       lastName: lastName,
+  //       attend: attend,
+  //     }),
+  //   });
+  //   const createdGuest = await response.json();
+  //   console.log(createdGuest);
+  //   createdGuest.push(guestsDisplay);
+  // }
+  // createApi().catch((error) => console.log(error));
+  // setFirstName('');
+  // setLastName('');
+  //   }
+  // };
   const handleHittingEnterDelete = (event) => {
     event.preventDefault();
     const newList = [...guests];
@@ -140,7 +140,7 @@ function App() {
     setGuests(newList);
   };
 
-  const showNonAttendingGuests = (event) => {
+  const showNonAttendingGuests = () => {
     // 1. Click on this first
     // event.preventDefault();
     // setGuests(guestsDisplay); // 2. Trying to set the guests list back to its original, i.e. all guests full form
@@ -154,7 +154,7 @@ function App() {
     setGuests(newListOfNonAttendingGuests); // 6. changes the list -> only the non-attending people remain in the list
   };
 
-  const showAttendingGuests = (event) => {
+  const showAttendingGuests = () => {
     // event.preventDefault(); // same result without this line
     // setGuests(guestsDisplay); // 7 Trying to set the guests list back to its original, i.e. all guests form
     console.log(guests); // it shows a mutated list of non-attending ppl for some reason, even that it wasn't touched in the showNonAttendingGuests function
@@ -168,7 +168,7 @@ function App() {
   };
 
   // console.log(guests);
-  const showInputFieldForUpdate = (event) => {
+  const showInputFieldForUpdate = () => {
     return setNoEdit(!noEdit);
   };
   return (
@@ -252,13 +252,9 @@ function App() {
         ) : (
           <div>
             <label htmlFor="firstNameChange">First Name: </label>
-            <input id="firstNameChange" onChange={handleChangeFirstName} />
+            <input id="firstNameChange" /* onChange={handleChangeFirstName}*/ />
             <label htmlFor="lastNameChange">Last Name: </label>
-            <input
-              id="lastNameChange"
-              onChange={handleChangeLastName}
-              onKeyDown={checkingChangingName}
-            />
+            {<input id="lastNameChange" /* onChange={handleChangeLastName}*/ />}
             {/* {checkingChangingName === undefined
               ? 'Something went wrong'
               : 'The guest was found!'}                         console log shows undefined on calling checkingChangingName, but VSC says checkingChangingName is always truthy...*/}
