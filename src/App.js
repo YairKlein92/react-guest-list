@@ -180,7 +180,7 @@ function App() {
           {/* Adding someone to the list */}
           <div>
             <div>Add:</div>
-            <label htmlFor="firstName">First name: </label>
+            <label htmlFor="firstName">First name</label>
             <input
               id="firstName"
               onChange={handleFirstName}
@@ -188,7 +188,7 @@ function App() {
             />
           </div>
           <div>
-            <label htmlFor="lastName">Last name: &nbsp;</label>
+            <label htmlFor="lastName">Last name</label>
             <input
               id="lastName"
               onChange={handleLastName}
