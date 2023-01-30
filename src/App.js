@@ -180,17 +180,17 @@ function App() {
           {/* Adding someone to the list */}
           <div>
             <div>Add:</div>
-            <label htmlFor="First Name">First Name: </label>
+            <label htmlFor="firstName">First name: </label>
             <input
-              id="First Name"
+              id="firstName"
               onChange={handleFirstName}
               value={firstName}
             />
           </div>
           <div>
-            <label htmlFor="last Name">Last Name: &nbsp;</label>
+            <label htmlFor="lastName">Last name: &nbsp;</label>
             <input
-              id="last Name"
+              id="lastName"
               onChange={handleLastName}
               onKeyDown={handleHittingEnter}
               value={lastName}
