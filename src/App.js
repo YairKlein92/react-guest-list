@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 function App() {
   const [guests, setGuests] = useState([]);
+  const [guestsDisplay, setGuestsDisplay] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [attend, setAttend] = useState(false);
+  const [changeFirstName, setChangeFirstName] = useState('');
+  const [changeLastName, setChangeLastName] = useState('');
+  // const [attend, setAttend] = useState(false);
+  const [noEdit, setNoEdit] = useState(true);
   const baseUrl = 'http://localhost:4000';
   // const [refetch, setRefetch] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -16,43 +20,25 @@ function App() {
       const allGuests = await response.json();
       console.log(allGuests);
       setGuests(allGuests);
+      setGuestsDisplay(allGuests);
       setLoading(false);
     }
 
     getUsers().catch((error) => console.log(error));
   }, []);
 
-  // const response = await fetch(`${baseUrl}/guests`);
-  // const allGuests = await response.json();
-  //   const response = await fetch(`${baseUrl}/guests/:id`);
-  // const guest = await response.json();
-
-  // async function createApi() {
-  //   const response = await fetch(`${baseUrl}/guests/`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       firstName: 'Csaba',
-  //       lastName: 'Klein',
-  //       attend: attend,
-  //     }),
-  //   });
-  //   const createdGuest = await response.json();
-  //   console.log(createdGuest);
-  // }
-  // createApi().catch((error) => console.log(error));
-
-  const handleChangeFirstName = (event) => {
+  const handleFirstName = (event) => {
     setFirstName(event.currentTarget.value);
-    console.log(firstName);
+  };
+  const handleLastName = (event) => {
+    setLastName(event.currentTarget.value);
+  };
+  const handleChangeFirstName = (event) => {
+    setChangeFirstName(event.currentTarget.value);
   };
   const handleChangeLastName = (event) => {
-    setLastName(event.currentTarget.value);
-    console.log(lastName);
+    setChangeLastName(event.currentTarget.value);
   };
-
   const handleHittingEnter = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -62,7 +48,7 @@ function App() {
       newList.push({
         firstName: firstName,
         lastName: lastName,
-        attend: attend,
+        // attend: attend,
       });
       setGuests(newList);
 
@@ -75,7 +61,7 @@ function App() {
           body: JSON.stringify({
             firstName: firstName,
             lastName: lastName,
-            attend: attend,
+            // attend: attend,
           }),
         });
         const createdGuest = await response.json();
@@ -84,9 +70,43 @@ function App() {
       createApi().catch((error) => console.log(error));
       setFirstName('');
       setLastName('');
+      console.log(guestsDisplay);
     }
   };
-  console.log(guests);
+  const checkingChangingName = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const newList = [...guests];
+      setChangeFirstName(changeFirstName);
+      setChangeLastName(changeLastName);
+      const result = newList.find(
+        ({ firstName }) => firstName === changeFirstName,
+      );
+      console.log(typeof result.id);
+      return result.id;
+      // const changingName
+
+      // async function createApi() {
+      //   const response = await fetch(`${baseUrl}/guests/`, {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: JSON.stringify({
+      //       firstName: firstName,
+      //       lastName: lastName,
+      //       attend: attend,
+      //     }),
+      //   });
+      //   const createdGuest = await response.json();
+      //   console.log(createdGuest);
+      //   createdGuest.push(guestsDisplay);
+      // }
+      // createApi().catch((error) => console.log(error));
+      // setFirstName('');
+      // setLastName('');
+    }
+  };
   const handleHittingEnterDelete = (event) => {
     event.preventDefault();
     const newList = [...guests];
@@ -96,6 +116,12 @@ function App() {
       return obj.firstName !== firstName;
     });
     setGuests(newListed);
+    async function deleteGuest() {
+      const response = await fetch(`${baseUrl}/guests/1`, { method: 'DELETE' });
+      const deletedGuest = await response.json();
+      console.log(deletedGuest);
+    }
+    deleteGuest().catch((error) => console.log(error));
 
     setFirstName('');
     setLastName('');
@@ -106,63 +132,94 @@ function App() {
     const emptyList = [];
     setGuests(emptyList);
   };
-  // console.log(guests);
 
+  const showAllGuestsAgain = (event) => {
+    event.preventDefault();
+    setGuests(guestsDisplay);
+    const newList = [...guestsDisplay];
+    setGuests(newList);
+  };
+
+  const showNonAttendingGuests = (event) => {
+    // 1. Click on this first
+    // event.preventDefault();
+    // setGuests(guestsDisplay); // 2. Trying to set the guests list back to its original, i.e. all guests full form
+    // console.log(guests); // 3. logs the full list
+    const attendingGuests = [...guestsDisplay];
+    // console.log(attendingGuests); // 4. logs the full list
+    const newListOfNonAttendingGuests = attendingGuests.filter((guest) => {
+      return guest.attending === false;
+    });
+    console.log(newListOfNonAttendingGuests); // 5. logs the non-attending ppl
+    setGuests(newListOfNonAttendingGuests); // 6. changes the list -> only the non-attending people remain in the list
+  };
+
+  const showAttendingGuests = (event) => {
+    // event.preventDefault(); // same result without this line
+    // setGuests(guestsDisplay); // 7 Trying to set the guests list back to its original, i.e. all guests form
+    console.log(guests); // it shows a mutated list of non-attending ppl for some reason, even that it wasn't touched in the showNonAttendingGuests function
+    const newList = [...guestsDisplay];
+    console.log(newList);
+    const newListed = newList.filter((guest) => {
+      return guest.attending === true;
+    });
+    console.log(newListed);
+    setGuests(newListed);
+  };
+
+  // console.log(guests);
+  const showInputFieldForUpdate = (event) => {
+    return setNoEdit(!noEdit);
+  };
   return (
     <div data-test-id="guest">
-      <div>
-        {/* Adding someone to the list */}
-        <div>Add:</div>
-        <label htmlFor="firstName">First Name: </label>
-        <input
-          id="firstName"
-          onChange={handleChangeFirstName}
-          value={firstName}
-        />
-      </div>
-      <div>
-        <label htmlFor="lastName">Last Name: &nbsp;</label>
-        <input
-          id="lastName"
-          onChange={handleChangeLastName}
-          onKeyDown={handleHittingEnter}
-          value={lastName}
-        />
-      </div>
-      {/* Removing someone from the list */}
-      <div>
-        {/* <div>Remove:</div> */}
-        {/* <div>
-          <label htmlFor="deleteFirstName">First Name: &nbsp; </label>
-          <input
-            id="deleteFirstName"
-            onChange={handleChangeFirstNameDelete}
-            value={deleteFirstName}
-          />
-        </div>
+      {loading ? (
+        ''
+      ) : (
         <div>
-          <label htmlFor="deleteLastName">Last Name: &nbsp;</label>
-          <input
-            id="deleteLastName"
-            onChange={handleChangeLastNameDelete}
-            onKeyDown={handleHittingEnterDelete}
-            value={deleteLastName}
-          />
-        </div> */}
+          {/* Adding someone to the list */}
+          <div>
+            <div>Add:</div>
+            <label htmlFor="firstName">First Name: </label>
+            <input
+              id="firstName"
+              onChange={handleFirstName}
+              value={firstName}
+            />
+          </div>
+          <div>
+            <label htmlFor="lastName">Last Name: &nbsp;</label>
+            <input
+              id="lastName"
+              onChange={handleLastName}
+              onKeyDown={handleHittingEnter}
+              value={lastName}
+            />
+          </div>
+        </div>
+      )}
+      <div>
         <button onClick={handleHittingEnterDelete}>Remove</button>
         <button onClick={handleHittingRemoveAll}>Remove all guests</button>
+        <button onClick={showAllGuestsAgain}>Show all guests</button>
+        <button onClick={showAttendingGuests}>
+          Show only attending guests
+        </button>
+        <button onClick={showNonAttendingGuests}>Show non-attendees</button>
       </div>
       <div>
         <div>{loading ? 'Loading...' : <h2>Guests:</h2>}</div>
+        {/* Guest component */}
         {guests.map((guest) => {
           return (
             <div key={`guest-name-${guest.firstName}-${guest.lastName}`}>
               <input
+                checked={guest.attending}
                 type="checkbox"
                 aria-label={`${guest.firstName} ${guest.lastName} attending status`}
                 onChange={(event) => {
                   const newAttend = [...guests];
-                  guest.attend = event.currentTarget.checked;
+                  guest.attending = event.currentTarget.checked;
                   setGuests(newAttend);
 
                   async function updateAttend() {
@@ -173,7 +230,7 @@ function App() {
                         headers: {
                           'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ attending: guest.attend }),
+                        body: JSON.stringify({ attending: guest.attending }),
                       },
                     );
                     const updatedGuest = await response.json();
@@ -182,11 +239,31 @@ function App() {
                   updateAttend().catch((error) => console.log(error));
                 }}
               />
-              {guest.firstName} {guest.lastName} is{' '}
-              {guest.attend === true ? 'attending' : 'not attending'}
+              {guest.firstName} {guest.lastName} is
+              {guest.attending === true ? ' attending' : ' not attending'}
             </div>
           );
-        })}
+        })}{' '}
+        {/* end of mapping */}
+        <button onClick={showInputFieldForUpdate}>Edit</button>
+        {/* onClick={setNoEdit(!noEdit)} */}
+        {noEdit ? (
+          ''
+        ) : (
+          <div>
+            <label htmlFor="firstNameChange">First Name: </label>
+            <input id="firstNameChange" onChange={handleChangeFirstName} />
+            <label htmlFor="lastNameChange">Last Name: </label>
+            <input
+              id="lastNameChange"
+              onChange={handleChangeLastName}
+              onKeyDown={checkingChangingName}
+            />
+            {/* {checkingChangingName === undefined
+              ? 'Something went wrong'
+              : 'The guest was found!'}                         console log shows undefined on calling checkingChangingName, but VSC says checkingChangingName is always truthy...*/}
+          </div>
+        )}
       </div>
     </div>
   );
