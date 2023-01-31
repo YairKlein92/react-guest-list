@@ -40,6 +40,7 @@ function App() {
   //   setChangeLastName(event.currentTarget.value);
   // };
   const handleHittingEnter = (event) => {
+    event.preventDefault();
     if (event.key === 'Enter') {
       event.preventDefault();
       const newList = [...guests];
@@ -178,18 +179,20 @@ function App() {
       ) : ( */}
       <div>
         {/* Adding someone to the list */}
-        <form>
-          <label htmlFor="firstName">
-            First name <input onChange={handleFirstName} value={firstName} />
-          </label>
-          <label htmlFor="lastName">
-            Last name
-            <input
-              onChange={handleLastName}
-              onKeyDown={handleHittingEnter}
-              value={lastName}
-            />
-          </label>
+        <form onSubmit={handleHittingEnter}>
+          <label htmlFor="firstName">First name</label>
+          <input
+            onChange={handleFirstName}
+            value={firstName}
+            name="firstName"
+          />
+          <label htmlFor="lastName">Last name</label>
+          <input
+            onChange={handleLastName}
+            onKeyDown={handleHittingEnter}
+            value={lastName}
+            name="lastName"
+          />
         </form>
       </div>
       {/* )} */}
