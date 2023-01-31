@@ -10,9 +10,9 @@ function App() {
   // const [changeLastName, setChangeLastName] = useState('');
   // const [attend, setAttend] = useState(false);
   const [noEdit, setNoEdit] = useState(true);
-  const baseUrl =
-    'https://express-guest-list-api-memory-data-store.yairklein.repl.co';
-  // const baseUrl = 'http://localhost:4000';
+  // const baseUrl =
+  //   'https://express-guest-list-api-memory-data-store.yairklein.repl.co';
+  const baseUrl = 'http://localhost:4000';
   const [refetch, setRefetch] = useState(false);
   const [loading, setLoading] = useState(true);
   // synchronizing API and app
@@ -113,28 +113,47 @@ function App() {
   // setLastName('');
   //   }
   // };
-  const handleHittingEnterDelete = (event) => {
-    event.preventDefault();
-    const newList = [...guests];
-    setFirstName(firstName);
-    setLastName(lastName);
-    const newListed = newList.filter((obj) => {
-      return obj.firstName !== firstName;
-    });
-    setGuests(newListed);
-    async function deleteGuest() {
-      const response = await fetch(`${baseUrl}/guests/${newListed.id}`, {
-        method: 'DELETE',
-      });
-      const deletedGuest = await response.json();
-      setRefetch(!refetch);
-      console.log(deletedGuest);
-    }
-    deleteGuest().catch((error) => console.log(error));
 
-    setFirstName('');
-    setLastName('');
-  };
+  // async function deleteGuest(id) {
+  //   const response = await fetch(`${baseUrl}/guests/${id}`, {
+  //     method: 'DELETE',
+  //   });
+  //   const deletedGuest = await response.json();
+  //   setRefetch(!refetch);
+  //   console.log(deletedGuest);
+  // }
+
+  // THIS THING WORKSSS
+  async function deleteGuest(id) {
+    await fetch(`${baseUrl}/guests/${id}`, {
+      method: 'DELETE',
+    });
+    const response = await fetch(`${baseUrl}/guests`);
+    const allGuests = await response.json();
+    setGuests(allGuests);
+
+    // const handleHittingEnterDelete = (event) => {
+    //   event.preventDefault();
+    //   const newList = [...guests];
+    //   setFirstName(firstName);
+    //   setLastName(lastName);
+    //   const newListed = newList.filter((obj) => {
+    //     return obj.firstName !== firstName;
+    //   });
+    //   setGuests(newListed);
+    //   async function deleteGuest(id) {
+    //     const response = await fetch(`${baseUrl}/guests/${id}`, {
+    //       method: 'DELETE',
+    //     });
+    //     const deletedGuest = await response.json();
+    //     setRefetch(!refetch);
+    //     console.log(deletedGuest);
+    //   }
+    //   deleteGuest().catch((error) => console.log(error));
+
+    //   setFirstName('');
+    //   setLastName('');
+  }
 
   const handleHittingRemoveAll = (event) => {
     event.preventDefault();
@@ -208,7 +227,7 @@ function App() {
         </div>
       )}
       <div>
-        <button onClick={handleHittingEnterDelete}>Delete</button>
+        {/* <button onClick={handleHittingEnterDelete}>Delete</button> */}
         <button onClick={handleHittingRemoveAll}>Delete all guests</button>
         <button onClick={showAllGuestsAgain}>Show all guests</button>
         <button onClick={showAttendingGuests}>
@@ -250,7 +269,7 @@ function App() {
               />
               {guest.firstName} {guest.lastName} is
               {guest.attending === true ? ' attending' : ' not attending'}
-              <button onClick={handleHittingEnterDelete}>
+              <button onClick={() => deleteGuest(guest.id)}>
                 Remove {guest.firstName} {guest.lastName}
               </button>
             </div>
