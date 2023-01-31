@@ -10,8 +10,9 @@ function App() {
   // const [changeLastName, setChangeLastName] = useState('');
   // const [attend, setAttend] = useState(false);
   const [noEdit, setNoEdit] = useState(true);
-  const baseUrl =
-    'https://express-guest-list-api-memory-data-store.yairklein.repl.co';
+  // const baseUrl =
+  //   'https://express-guest-list-api-memory-data-store.yairklein.repl.co';
+  const baseUrl = 'http://localhost:4000';
   const [refetch, setRefetch] = useState(false);
   const [loading, setLoading] = useState(true);
   // synchronizing API and app
@@ -205,8 +206,8 @@ function App() {
         </div>
       )}
       <div>
-        <button onClick={handleHittingEnterDelete}>Remove</button>
-        <button onClick={handleHittingRemoveAll}>Remove all guests</button>
+        <button onClick={handleHittingEnterDelete}>Delete</button>
+        <button onClick={handleHittingRemoveAll}>Delete all guests</button>
         <button onClick={showAllGuestsAgain}>Show all guests</button>
         <button onClick={showAttendingGuests}>
           Show only attending guests
@@ -247,6 +248,9 @@ function App() {
               />
               {guest.firstName} {guest.lastName} is
               {guest.attending === true ? ' attending' : ' not attending'}
+              <button onClick={handleHittingEnterDelete}>
+                Remove {guest.firstName} {guest.lastName}
+              </button>
             </div>
           );
         })}{' '}
