@@ -123,7 +123,9 @@ function App() {
     });
     setGuests(newListed);
     async function deleteGuest() {
-      const response = await fetch(`${baseUrl}/guests/1`, { method: 'DELETE' });
+      const response = await fetch(`${baseUrl}/guests/${newListed.id}`, {
+        method: 'DELETE',
+      });
       const deletedGuest = await response.json();
       setRefetch(!refetch);
       console.log(deletedGuest);
