@@ -173,24 +173,24 @@ function App() {
   };
   return (
     <div data-test-id="guest">
-      {loading ? (
+      {/* {loading ? (
         ''
-      ) : (
-        <div>
-          {/* Adding someone to the list */}
-          <label htmlFor="firstName">
-            First name <input onChange={handleFirstName} value={firstName} />
-          </label>
-          <label htmlFor="lastName">
-            Last name
-            <input
-              onChange={handleLastName}
-              onKeyDown={handleHittingEnter}
-              value={lastName}
-            />
-          </label>
-        </div>
-      )}
+      ) : ( */}
+      <div>
+        {/* Adding someone to the list */}
+        <label htmlFor="firstName">
+          First name <input onChange={handleFirstName} value={firstName} />
+        </label>
+        <label htmlFor="lastName">
+          Last name
+          <input
+            onChange={handleLastName}
+            onKeyDown={handleHittingEnter}
+            value={lastName}
+          />
+        </label>
+      </div>
+      {/* )} */}
       <div>
         <button onClick={handleHittingEnterDelete}>Remove</button>
         <button onClick={handleHittingRemoveAll}>Remove all guests</button>
