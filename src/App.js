@@ -42,6 +42,7 @@ function App() {
   // const handleChangeLastName = (event) => {
   //   setChangeLastName(event.currentTarget.value);
   // };
+
   const handleHittingEnter = (event) => {
     event.preventDefault();
     if (event.key === 'Enter') {
@@ -204,7 +205,7 @@ function App() {
       {loading ? (
         ''
       ) : (
-        <div>
+        <div data-test-id="guest">
           <form onSubmit={handleHittingEnter}>
             <label htmlFor="firstName">First name</label>
             <input
