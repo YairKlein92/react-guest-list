@@ -239,42 +239,41 @@ function App() {
         <div>{loading ? 'Loading...' : <h2>Guests:</h2>}</div>
         {guests.map((guest) => {
           return (
-            <div
-              data-test-id="guest"
-              key={`guest-name-${guest.firstName}-${guest.lastName}`}
-            >
-              <input
-                checked={guest.attending}
-                type="checkbox"
-                aria-label={`${guest.firstName} ${guest.lastName} attending status`}
-                onChange={(event) => {
-                  const newAttend = [...guests];
-                  guest.attending = event.currentTarget.checked;
-                  setGuests(newAttend);
+            <div key={`guest-name-${guest.firstName}-${guest.lastName}`}>
+              <div data-test-id="guest">
+                <input
+                  checked={guest.attending}
+                  type="checkbox"
+                  aria-label={`${guest.firstName} ${guest.lastName} attending status`}
+                  onChange={(event) => {
+                    const newAttend = [...guests];
+                    guest.attending = event.currentTarget.checked;
+                    setGuests(newAttend);
 
-                  async function updateAttend() {
-                    const response = await fetch(
-                      `${baseUrl}/guests/${guest.id}`,
-                      {
-                        method: 'PUT',
-                        headers: {
-                          'Content-Type': 'application/json',
+                    async function updateAttend() {
+                      const response = await fetch(
+                        `${baseUrl}/guests/${guest.id}`,
+                        {
+                          method: 'PUT',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({ attending: guest.attending }),
                         },
-                        body: JSON.stringify({ attending: guest.attending }),
-                      },
-                    );
-                    const updatedGuest = await response.json();
-                    setRefetch(!refetch);
-                    console.log(updatedGuest);
-                  }
-                  updateAttend().catch((error) => console.log(error));
-                }}
-              />
-              {guest.firstName} {guest.lastName} is
-              {guest.attending === true ? ' attending' : ' not attending'}
-              <button onClick={() => deleteGuest(guest.id)}>
-                Remove {guest.firstName} {guest.lastName}
-              </button>
+                      );
+                      const updatedGuest = await response.json();
+                      setRefetch(!refetch);
+                      console.log(updatedGuest);
+                    }
+                    updateAttend().catch((error) => console.log(error));
+                  }}
+                />
+                {guest.firstName} {guest.lastName} is
+                {guest.attending === true ? ' attending' : ' not attending'}
+                <button onClick={() => deleteGuest(guest.id)}>
+                  Remove {guest.firstName} {guest.lastName}
+                </button>
+              </div>
             </div>
           );
         })}{' '}
