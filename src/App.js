@@ -176,7 +176,7 @@ function App() {
       {loading ? (
         ''
       ) : (
-        <div>
+        <div data-test-id="guest">
           {/* Adding someone to the list */}
           <label htmlFor="firstName">
             First name <input onChange={handleFirstName} value={firstName} />
@@ -205,7 +205,10 @@ function App() {
         {/* Guest component */}
         {guests.map((guest) => {
           return (
-            <div key={`guest-name-${guest.firstName}-${guest.lastName}`}>
+            <div
+              data-test-id="guest"
+              key={`guest-name-${guest.firstName}-${guest.lastName}`}
+            >
               <input
                 checked={guest.attending}
                 type="checkbox"
