@@ -11,7 +11,7 @@ function App() {
   // const [attend, setAttend] = useState(false);
   const [noEdit, setNoEdit] = useState(true);
   const baseUrl = 'http://localhost:4000';
-  // const [refetch, setRefetch] = useState(false);
+  const [refetch, setRefetch] = useState(false);
   const [loading, setLoading] = useState(true);
   // synchronizing API and app
   useEffect(() => {
@@ -19,15 +19,14 @@ function App() {
     async function getUsers() {
       const response = await fetch(`${baseUrl}/guests`);
       const allGuests = await response.json();
-      console.log(allGuests);
-      setLoading(false);
       setDisabled(false);
+      setLoading(false);
       setGuests(allGuests);
       setGuestsDisplay(allGuests);
     }
 
     getUsers().catch((error) => console.log(error));
-  }, []);
+  }, [refetch]);
 
   const handleFirstName = (event) => {
     setFirstName(event.currentTarget.value);
@@ -68,6 +67,7 @@ function App() {
           }),
         });
         const createdGuest = await response.json();
+        setRefetch(!refetch);
         console.log(createdGuest);
       }
       createApi().catch((error) => console.log(error));
@@ -123,6 +123,7 @@ function App() {
     async function deleteGuest() {
       const response = await fetch(`${baseUrl}/guests/1`, { method: 'DELETE' });
       const deletedGuest = await response.json();
+      setRefetch(!refetch);
       console.log(deletedGuest);
     }
     deleteGuest().catch((error) => console.log(error));
@@ -237,6 +238,7 @@ function App() {
                       },
                     );
                     const updatedGuest = await response.json();
+                    setRefetch(!refetch);
                     console.log(updatedGuest);
                   }
                   updateAttend().catch((error) => console.log(error));
