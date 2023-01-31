@@ -74,6 +74,7 @@ function App() {
       console.log(guestsDisplay);
     }
   };
+
   // const checkingChangingName = (event) => {
   //   if (event.key === 'Enter') {
   //     event.preventDefault();
@@ -178,7 +179,6 @@ function App() {
         ''
       ) : ( */}
       <div>
-        {/* Adding someone to the list */}
         <form onSubmit={handleHittingEnter}>
           <label htmlFor="firstName">First name</label>
           <input
@@ -207,7 +207,6 @@ function App() {
       </div>
       <div>
         <div>{loading ? 'Loading...' : <h2>Guests:</h2>}</div>
-        {/* Guest component */}
         {guests.map((guest) => {
           return (
             <div key={`guest-name-${guest.firstName}-${guest.lastName}`}>
@@ -242,7 +241,6 @@ function App() {
             </div>
           );
         })}{' '}
-        {/* end of mapping */}
         <button onClick={showInputFieldForUpdate}>Edit</button>
         {/* onClick={setNoEdit(!noEdit)} */}
         {noEdit ? (
