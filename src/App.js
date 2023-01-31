@@ -269,7 +269,10 @@ function App() {
                     updateAttend().catch((error) => console.log(error));
                   }}
                 />
-                {guest.firstName} {guest.lastName} is
+                <div data-test-id="guest">
+                  {guest.firstName} {guest.lastName}
+                </div>{' '}
+                is
                 {guest.attending === true ? ' attending' : ' not attending'}
                 <button onClick={() => deleteGuest(guest.id)}>
                   Remove {guest.firstName} {guest.lastName}
