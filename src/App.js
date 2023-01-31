@@ -19,9 +19,9 @@ function App() {
       const response = await fetch(`${baseUrl}/guests`);
       const allGuests = await response.json();
       console.log(allGuests);
+      setLoading(false);
       setGuests(allGuests);
       setGuestsDisplay(allGuests);
-      setLoading(false);
     }
 
     getUsers().catch((error) => console.log(error));
@@ -181,8 +181,7 @@ function App() {
           <div>
             <div>Add:</div>
             <label htmlFor="firstName">
-              First name
-              <input onChange={handleFirstName} value={firstName} />
+              First name <input onChange={handleFirstName} value={firstName} />
             </label>
           </div>
           <div>
