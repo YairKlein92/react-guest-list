@@ -185,6 +185,7 @@ function App() {
             onChange={handleFirstName}
             value={firstName}
             name="firstName"
+            id="firstName"
           />
           <label htmlFor="lastName">Last name</label>
           <input
@@ -192,6 +193,7 @@ function App() {
             onKeyDown={handleHittingEnter}
             value={lastName}
             name="lastName"
+            id="lastName"
           />
         </form>
       </div>
