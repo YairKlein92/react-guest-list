@@ -172,11 +172,11 @@ function App() {
     return setNoEdit(!noEdit);
   };
   return (
-    <div>
+    <div data-test-id="guest">
       {loading ? (
         ''
       ) : (
-        <div data-test-id="guest">
+        <div>
           {/* Adding someone to the list */}
           <label htmlFor="firstName">
             First name <input onChange={handleFirstName} value={firstName} />
@@ -205,10 +205,7 @@ function App() {
         {/* Guest component */}
         {guests.map((guest) => {
           return (
-            <div
-              data-test-id="guest"
-              key={`guest-name-${guest.firstName}-${guest.lastName}`}
-            >
+            <div key={`guest-name-${guest.firstName}-${guest.lastName}`}>
               <input
                 checked={guest.attending}
                 type="checkbox"
