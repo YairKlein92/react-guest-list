@@ -178,21 +178,17 @@ function App() {
       ) : (
         <div>
           {/* Adding someone to the list */}
-          <div>
-            <label htmlFor="firstName">
-              First name <input onChange={handleFirstName} value={firstName} />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="lastName">
-              Last name
-              <input
-                onChange={handleLastName}
-                onKeyDown={handleHittingEnter}
-                value={lastName}
-              />
-            </label>
-          </div>
+          <label htmlFor="firstName">
+            First name <input onChange={handleFirstName} value={firstName} />
+          </label>
+          <label htmlFor="lastName">
+            Last name
+            <input
+              onChange={handleLastName}
+              onKeyDown={handleHittingEnter}
+              value={lastName}
+            />
+          </label>
         </div>
       )}
       <div>
