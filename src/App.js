@@ -200,7 +200,7 @@ function App() {
     return setNoEdit(!noEdit);
   };
   return (
-    <div data-test-id="guest">
+    <div>
       {loading ? (
         ''
       ) : (
@@ -239,7 +239,10 @@ function App() {
         <div>{loading ? 'Loading...' : <h2>Guests:</h2>}</div>
         {guests.map((guest) => {
           return (
-            <div key={`guest-name-${guest.firstName}-${guest.lastName}`}>
+            <div
+              data-test-id="guest"
+              key={`guest-name-${guest.firstName}-${guest.lastName}`}
+            >
               <input
                 checked={guest.attending}
                 type="checkbox"
