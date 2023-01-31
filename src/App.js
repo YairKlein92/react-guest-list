@@ -5,6 +5,7 @@ function App() {
   const [guestsDisplay, setGuestsDisplay] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [disabled, setDisabled] = useState(true);
   // const [changeFirstName, setChangeFirstName] = useState('');
   // const [changeLastName, setChangeLastName] = useState('');
   // const [attend, setAttend] = useState(false);
@@ -20,6 +21,7 @@ function App() {
       const allGuests = await response.json();
       console.log(allGuests);
       setLoading(false);
+      setDisabled(false);
       setGuests(allGuests);
       setGuestsDisplay(allGuests);
     }
@@ -175,29 +177,31 @@ function App() {
   };
   return (
     <div data-test-id="guest">
-      {loading ? (
+      {/* {loading ? (
         ''
-      ) : (
-        <div>
-          <form onSubmit={handleHittingEnter}>
-            <label htmlFor="firstName">First name</label>
-            <input
-              onChange={handleFirstName}
-              value={firstName}
-              name="firstName"
-              id="firstName"
-            />
-            <label htmlFor="lastName">Last name</label>
-            <input
-              onChange={handleLastName}
-              onKeyDown={handleHittingEnter}
-              value={lastName}
-              name="lastName"
-              id="lastName"
-            />
-          </form>
-        </div>
-      )}
+      ) : ( */}
+      <div>
+        <form onSubmit={handleHittingEnter}>
+          <label htmlFor="firstName">First name</label>
+          <input
+            onChange={handleFirstName}
+            disabled={disabled}
+            value={firstName}
+            name="firstName"
+            id="firstName"
+          />
+          <label htmlFor="lastName">Last name</label>
+          <input
+            onChange={handleLastName}
+            disabled={disabled}
+            onKeyDown={handleHittingEnter}
+            value={lastName}
+            name="lastName"
+            id="lastName"
+          />
+        </form>
+      </div>
+      {/* )} */}
       <div>
         <button onClick={handleHittingEnterDelete}>Remove</button>
         <button onClick={handleHittingRemoveAll}>Remove all guests</button>
