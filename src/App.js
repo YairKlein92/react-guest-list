@@ -204,7 +204,7 @@ function App() {
       {loading ? (
         ''
       ) : (
-        <div data-test-id="guest">
+        <div>
           <form onSubmit={handleHittingEnter}>
             <label htmlFor="firstName">First name</label>
             <input
