@@ -182,18 +182,13 @@ function App() {
             <div>Add:</div>
             <label htmlFor="firstName">
               First name
-              <input
-                id="firstName"
-                onChange={handleFirstName}
-                value={firstName}
-              />
+              <input onChange={handleFirstName} value={firstName} />
             </label>
           </div>
           <div>
             <label htmlFor="lastName">
               Last name
               <input
-                id="lastName"
                 onChange={handleLastName}
                 onKeyDown={handleHittingEnter}
                 value={lastName}
