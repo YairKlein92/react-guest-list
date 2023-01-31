@@ -179,7 +179,6 @@ function App() {
         <div>
           {/* Adding someone to the list */}
           <div>
-            <div>Add:</div>
             <label htmlFor="firstName">
               First name <input onChange={handleFirstName} value={firstName} />
             </label>
