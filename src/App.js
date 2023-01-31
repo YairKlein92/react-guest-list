@@ -10,9 +10,9 @@ function App() {
   // const [changeLastName, setChangeLastName] = useState('');
   // const [attend, setAttend] = useState(false);
   const [noEdit, setNoEdit] = useState(true);
-  // const baseUrl =
-  //   'https://express-guest-list-api-memory-data-store.yairklein.repl.co';
-  const baseUrl = 'http://localhost:4000';
+  const baseUrl =
+    'https://express-guest-list-api-memory-data-store.yairklein.repl.co';
+  // const baseUrl = 'http://localhost:4000';
   const [refetch, setRefetch] = useState(false);
   const [loading, setLoading] = useState(true);
   // synchronizing API and app
