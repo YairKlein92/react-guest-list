@@ -249,10 +249,22 @@ function App() {
           ''
         ) : (
           <div>
-            <label htmlFor="firstNameChange">First Name: </label>
-            <input id="firstNameChange" /* onChange={handleChangeFirstName}*/ />
-            <label htmlFor="lastNameChange">Last Name: </label>
-            {<input id="lastNameChange" /* onChange={handleChangeLastName}*/ />}
+            <label htmlFor="firstNameChange">
+              First Name:{' '}
+              <input
+                id="firstNameChange" /* onChange={handleChangeFirstName}*/
+              />
+            </label>
+
+            <label htmlFor="lastNameChange">
+              Last Name:{' '}
+              {
+                <input
+                  id="lastNameChange" /* onChange={handleChangeLastName}*/
+                />
+              }
+            </label>
+
             {/* {checkingChangingName === undefined
               ? 'Something went wrong'
               : 'The guest was found!'}                         console log shows undefined on calling checkingChangingName, but VSC says checkingChangingName is always truthy...*/}
