@@ -172,7 +172,7 @@ function App() {
     return setNoEdit(!noEdit);
   };
   return (
-    <div data-test-id="guest">
+    <div>
       {loading ? (
         ''
       ) : (
