@@ -245,14 +245,14 @@ function App() {
         ) : (
           <div>
             <label htmlFor="firstNameChange">
-              First Name:{' '}
+              First Name:
               <input
-                id="firstNameChange" /* onChange={handleChangeFirstName}*/
+              /* onChange={handleChangeFirstName}*/
               />
             </label>
 
             <label htmlFor="lastNameChange">
-              Last Name:{' '}
+              Last Name:
               {
                 <input
                   id="lastNameChange" /* onChange={handleChangeLastName}*/
