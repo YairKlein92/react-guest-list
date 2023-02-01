@@ -225,88 +225,81 @@ function App() {
           />
         </form>
       )}
+      {loading ? 'Loading...' : <h2>Guests:</h2>}
+      {guests.map((guest) => {
+        return (
+          <div
+            data-test-id="guest"
+            key={`guest-name-${guest.firstName}-${guest.lastName}`}
+          >
+            <input
+              checked={guest.attending}
+              type="checkbox"
+              aria-label={`${guest.firstName} ${guest.lastName} attending status`}
+              onChange={(event) => {
+                const newAttend = [...guests];
+                guest.attending = event.currentTarget.checked;
+                setGuests(newAttend);
 
-      <div>
-        {loading ? 'Loading...' : <h2>Guests:</h2>}
-        {guests.map((guest) => {
-          return (
-            <div
-              data-test-id="guest"
-              key={`guest-name-${guest.firstName}-${guest.lastName}`}
-            >
-              <input
-                checked={guest.attending}
-                type="checkbox"
-                aria-label={`${guest.firstName} ${guest.lastName} attending status`}
-                onChange={(event) => {
-                  const newAttend = [...guests];
-                  guest.attending = event.currentTarget.checked;
-                  setGuests(newAttend);
-
-                  async function updateAttend() {
-                    const response = await fetch(
-                      `${baseUrl}/guests/${guest.id}`,
-                      {
-                        method: 'PUT',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ attending: guest.attending }),
+                async function updateAttend() {
+                  const response = await fetch(
+                    `${baseUrl}/guests/${guest.id}`,
+                    {
+                      method: 'PUT',
+                      headers: {
+                        'Content-Type': 'application/json',
                       },
-                    );
-                    const updatedGuest = await response.json();
-                    setRefetch(!refetch);
-                    console.log(updatedGuest);
-                  }
-                  updateAttend().catch((error) => console.log(error));
-                }}
-              />
-              {guest.firstName} {guest.lastName}
-              is
-              {guest.attending === true ? ' attending' : ' not attending'}
-              <button onClick={() => deleteGuest(guest.id)}>
-                Remove {guest.firstName} {guest.lastName}
-              </button>
-            </div>
-          );
-        })}{' '}
+                      body: JSON.stringify({ attending: guest.attending }),
+                    },
+                  );
+                  const updatedGuest = await response.json();
+                  setRefetch(!refetch);
+                  console.log(updatedGuest);
+                }
+                updateAttend().catch((error) => console.log(error));
+              }}
+            />
+            {guest.firstName} {guest.lastName}
+            is
+            {guest.attending === true ? ' attending' : ' not attending'}
+            <button onClick={() => deleteGuest(guest.id)}>
+              Remove {guest.firstName} {guest.lastName}
+            </button>
+          </div>
+        );
+      })}{' '}
+      <div>
+        {/* <button onClick={handleHittingEnterDelete}>Delete</button> */}
+        <button onClick={handleHittingRemoveAll}>Delete all guests</button>
+        <button onClick={showAllGuestsAgain}>Show all guests</button>
+        <button onClick={showAttendingGuests}>
+          Show only attending guests
+        </button>
+        <button onClick={showNonAttendingGuests}>Show non-attendees</button>
+      </div>
+      <button onClick={showInputFieldForUpdate}>Edit</button>
+      {/* onClick={setNoEdit(!noEdit)} */}
+      {noEdit ? (
+        ''
+      ) : (
         <div>
-          {/* <button onClick={handleHittingEnterDelete}>Delete</button> */}
-          <button onClick={handleHittingRemoveAll}>Delete all guests</button>
-          <button onClick={showAllGuestsAgain}>Show all guests</button>
-          <button onClick={showAttendingGuests}>
-            Show only attending guests
-          </button>
-          <button onClick={showNonAttendingGuests}>Show non-attendees</button>
-        </div>
-        <button onClick={showInputFieldForUpdate}>Edit</button>
-        {/* onClick={setNoEdit(!noEdit)} */}
-        {noEdit ? (
-          ''
-        ) : (
-          <div>
-            <label htmlFor="firstNameChange">
-              First Name:
-              <input
-              /* onChange={handleChangeFirstName}*/
-              />
-            </label>
+          <label htmlFor="firstNameChange">
+            First Name:
+            <input
+            /* onChange={handleChangeFirstName}*/
+            />
+          </label>
 
-            <label htmlFor="lastNameChange">
-              Last Name:
-              {
-                <input
-                  id="lastNameChange" /* onChange={handleChangeLastName}*/
-                />
-              }
-            </label>
+          <label htmlFor="lastNameChange">
+            Last Name:
+            {<input id="lastNameChange" /* onChange={handleChangeLastName}*/ />}
+          </label>
 
-            {/* {checkingChangingName === undefined
+          {/* {checkingChangingName === undefined
               ? 'Something went wrong'
               : 'The guest was found!'}                         console log shows undefined on calling checkingChangingName, but VSC says checkingChangingName is always truthy...*/}
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
