@@ -6,7 +6,6 @@ function App() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [disabled, setDisabled] = useState(true);
-
   // const [changeFirstName, setChangeFirstName] = useState('');
   // const [changeLastName, setChangeLastName] = useState('');
   // const [attend, setAttend] = useState(false);
@@ -193,6 +192,7 @@ function App() {
     setGuests(newListed);
   };
 
+  // console.log(guests);
   const showInputFieldForUpdate = () => {
     return setNoEdit(!noEdit);
   };
@@ -202,26 +202,23 @@ function App() {
         ''
       ) : (
         <form>
-          <label htmlFor="firstName">
-            First name{' '}
-            <input
-              disabled={disabled}
-              onChange={handleFirstName}
-              value={firstName}
-              name="firstName"
-            />
-          </label>
-
-          <label htmlFor="lastName">
-            Last name{' '}
-            <input
-              disabled={disabled}
-              onChange={handleLastName}
-              onKeyDown={handleHittingEnter}
-              value={lastName}
-              name="lastName"
-            />
-          </label>
+          <label htmlFor="firstName">First name</label>
+          <input
+            onChange={handleFirstName}
+            disabled={disabled}
+            value={firstName}
+            name="firstName"
+            id="firstName"
+          />
+          <label htmlFor="lastName">Last name</label>
+          <input
+            onChange={handleLastName}
+            disabled={disabled}
+            onKeyDown={handleHittingEnter}
+            value={lastName}
+            name="lastName"
+            id="lastName"
+          />
         </form>
       )}
       {loading ? 'Loading...' : <h2>Guests:</h2>}
@@ -252,6 +249,7 @@ function App() {
                     },
                   );
                   const updatedGuest = await response.json();
+                  // setRefetch(!refetch);
                   console.log(updatedGuest);
                 }
                 updateAttend().catch((error) => console.log(error));
