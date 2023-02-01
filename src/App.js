@@ -13,7 +13,7 @@ function App() {
   const baseUrl =
     'https://express-guest-list-api-memory-data-store.yairklein.repl.co';
   // const baseUrl = 'http://localhost:4000';
-  const [refetch, setRefetch] = useState(false);
+  // const [refetch, setRefetch] = useState(false);
   const [loading, setLoading] = useState(true);
   // synchronizing API and app
   useEffect(() => {
@@ -28,7 +28,7 @@ function App() {
     }
 
     getUsers().catch((error) => console.log(error));
-  }, [refetch]);
+  }, []);
 
   const handleFirstName = (event) => {
     setFirstName(event.currentTarget.value);
@@ -70,7 +70,7 @@ function App() {
           }),
         });
         const createdGuest = await response.json();
-        setRefetch(!refetch);
+        // setRefetch(!refetch);
         console.log(createdGuest);
       }
       createApi().catch((error) => console.log(error));
@@ -124,7 +124,7 @@ function App() {
   //   console.log(deletedGuest);
   // }
 
-  // THIS THING WORKSSS
+  // THIS THING WORKS
   async function deleteGuest(id) {
     await fetch(`${baseUrl}/guests/${id}`, {
       method: 'DELETE',
@@ -253,7 +253,7 @@ function App() {
                     },
                   );
                   const updatedGuest = await response.json();
-                  setRefetch(!refetch);
+                  // setRefetch(!refetch);
                   console.log(updatedGuest);
                 }
                 updateAttend().catch((error) => console.log(error));
