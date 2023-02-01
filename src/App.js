@@ -205,27 +205,25 @@ function App() {
       {loading ? (
         ''
       ) : (
-        <div>
-          <form onSubmit={handleHittingEnter}>
-            <label htmlFor="firstName">First name</label>
-            <input
-              onChange={handleFirstName}
-              disabled={disabled}
-              value={firstName}
-              name="firstName"
-              id="firstName"
-            />
-            <label htmlFor="lastName">Last name</label>
-            <input
-              onChange={handleLastName}
-              disabled={disabled}
-              onKeyDown={handleHittingEnter}
-              value={lastName}
-              name="lastName"
-              id="lastName"
-            />
-          </form>
-        </div>
+        <form onSubmit={handleHittingEnter}>
+          <label htmlFor="firstName">First name</label>
+          <input
+            onChange={handleFirstName}
+            disabled={disabled}
+            value={firstName}
+            name="firstName"
+            id="firstName"
+          />
+          <label htmlFor="lastName">Last name</label>
+          <input
+            onChange={handleLastName}
+            disabled={disabled}
+            onKeyDown={handleHittingEnter}
+            value={lastName}
+            name="lastName"
+            id="lastName"
+          />
+        </form>
       )}
 
       <div>
