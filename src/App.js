@@ -236,41 +236,39 @@ function App() {
               data-test-id="guest"
               key={`guest-name-${guest.firstName}-${guest.lastName}`}
             >
-              <div data-test-id="guest">
-                <input
-                  checked={guest.attending}
-                  type="checkbox"
-                  aria-label={`${guest.firstName} ${guest.lastName} attending status`}
-                  onChange={(event) => {
-                    const newAttend = [...guests];
-                    guest.attending = event.currentTarget.checked;
-                    setGuests(newAttend);
+              <input
+                checked={guest.attending}
+                type="checkbox"
+                aria-label={`${guest.firstName} ${guest.lastName} attending status`}
+                onChange={(event) => {
+                  const newAttend = [...guests];
+                  guest.attending = event.currentTarget.checked;
+                  setGuests(newAttend);
 
-                    async function updateAttend() {
-                      const response = await fetch(
-                        `${baseUrl}/guests/${guest.id}`,
-                        {
-                          method: 'PUT',
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify({ attending: guest.attending }),
+                  async function updateAttend() {
+                    const response = await fetch(
+                      `${baseUrl}/guests/${guest.id}`,
+                      {
+                        method: 'PUT',
+                        headers: {
+                          'Content-Type': 'application/json',
                         },
-                      );
-                      const updatedGuest = await response.json();
-                      setRefetch(!refetch);
-                      console.log(updatedGuest);
-                    }
-                    updateAttend().catch((error) => console.log(error));
-                  }}
-                />
-                {guest.firstName} {guest.lastName}
-                is
-                {guest.attending === true ? ' attending' : ' not attending'}
-                <button onClick={() => deleteGuest(guest.id)}>
-                  Remove {guest.firstName} {guest.lastName}
-                </button>
-              </div>
+                        body: JSON.stringify({ attending: guest.attending }),
+                      },
+                    );
+                    const updatedGuest = await response.json();
+                    setRefetch(!refetch);
+                    console.log(updatedGuest);
+                  }
+                  updateAttend().catch((error) => console.log(error));
+                }}
+              />
+              {guest.firstName} {guest.lastName}
+              is
+              {guest.attending === true ? ' attending' : ' not attending'}
+              <button onClick={() => deleteGuest(guest.id)}>
+                Remove {guest.firstName} {guest.lastName}
+              </button>
             </div>
           );
         })}{' '}
