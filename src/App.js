@@ -227,17 +227,9 @@ function App() {
           </form>
         </div>
       )}
+
       <div>
-        {/* <button onClick={handleHittingEnterDelete}>Delete</button> */}
-        <button onClick={handleHittingRemoveAll}>Delete all guests</button>
-        <button onClick={showAllGuestsAgain}>Show all guests</button>
-        <button onClick={showAttendingGuests}>
-          Show only attending guests
-        </button>
-        <button onClick={showNonAttendingGuests}>Show non-attendees</button>
-      </div>
-      <div>
-        <div>{loading ? 'Loading...' : <h2>Guests:</h2>}</div>
+        {loading ? 'Loading...' : <h2>Guests:</h2>}
         {guests.map((guest) => {
           return (
             <div key={`guest-name-${guest.firstName}-${guest.lastName}`}>
@@ -279,6 +271,15 @@ function App() {
             </div>
           );
         })}{' '}
+        <div>
+          {/* <button onClick={handleHittingEnterDelete}>Delete</button> */}
+          <button onClick={handleHittingRemoveAll}>Delete all guests</button>
+          <button onClick={showAllGuestsAgain}>Show all guests</button>
+          <button onClick={showAttendingGuests}>
+            Show only attending guests
+          </button>
+          <button onClick={showNonAttendingGuests}>Show non-attendees</button>
+        </div>
         <button onClick={showInputFieldForUpdate}>Edit</button>
         {/* onClick={setNoEdit(!noEdit)} */}
         {noEdit ? (
