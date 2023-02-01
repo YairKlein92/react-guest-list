@@ -232,7 +232,10 @@ function App() {
         {loading ? 'Loading...' : <h2>Guests:</h2>}
         {guests.map((guest) => {
           return (
-            <div key={`guest-name-${guest.firstName}-${guest.lastName}`}>
+            <div
+              data-test-id="guest"
+              key={`guest-name-${guest.firstName}-${guest.lastName}`}
+            >
               <div data-test-id="guest">
                 <input
                   checked={guest.attending}
